@@ -35,7 +35,7 @@ def test_initiate_checkout_success(client, shop_client_auth_headers, db):
     """Test successful checkout initiation and QR generation."""
     access_headers, _ = shop_client_auth_headers
     checkout_payload = {
-        "items": [{"id": 1, "name": "Fifa 19", "subtitle": "PS4", "price": 64.0, "quantity": 1, "unit": "pack"}],
+        "items": [{"id": 1, "name": "Fifa 19", "subtitle": "PS4", "price": 1500000, "currency": "VND", "quantity": 1, "unit": "pack"}],
         "shipping_cost": 5.0,
         "subtotal": 64.0,
         "total_cost": 69.0
@@ -64,7 +64,7 @@ def test_get_order_history_success(client, shop_client_auth_headers):
     
     # Initiate an order first
     checkout_payload = {
-        "items": [{"id": 2, "name": "Glacier White 500GB", "subtitle": "PS4", "price": 249.99, "quantity": 1, "unit": "each"}],
+        "items": [{"id": 2, "name": "Glacier White 500GB", "subtitle": "PS4", "price": 8000000, "currency": "VND", "quantity": 1, "unit": "each"}],
         "shipping_cost": 10.0,
         "subtotal": 249.99,
         "total_cost": 259.99
@@ -100,7 +100,7 @@ def test_get_order_status_success(client, shop_client_auth_headers):
     """Test successful retrieval of order status from the public endpoint."""
     access_headers, _ = shop_client_auth_headers
     checkout_payload = {
-        "items": [{"id": 3, "name": "Platinum Headset", "subtitle": "PS4", "price": 119.99, "quantity": 1, "unit": "each"}],
+        "items": [{"id": 3, "name": "Platinum Headset", "subtitle": "PS4", "price": 2500000, "currency": "VND", "quantity": 1, "unit": "each"}],
         "shipping_cost": 0.0,
         "subtotal": 119.99,
         "total_cost": 119.99
@@ -127,7 +127,7 @@ def test_get_order_history_no_completed_orders(client, shop_client_auth_headers)
 
     # Initiate a pending order, but don't confirm it
     checkout_payload = {
-        "items": [{"id": 1, "name": "Fifa 19", "subtitle": "PS4", "price": 64.0, "quantity": 1, "unit": "pack"}],
+        "items": [{"id": 1, "name": "Fifa 19", "subtitle": "PS4", "price": 1500000, "currency": "VND", "quantity": 1, "unit": "pack"}],
         "shipping_cost": 5.0, "subtotal": 64.0, "total_cost": 69.0
     }
     client.post('/api/orders/checkout', headers=access_headers, json=checkout_payload)
@@ -142,7 +142,7 @@ def test_receive_payment_webhook_success(client, db, mock_celery_process_order, 
     access_token = login_res.json()['access_token']
     
     checkout_payload = {
-        "items": [{"id": 1, "name": "Fifa 19", "subtitle": "PS4", "price": 64.0, "quantity": 1, "unit": "pack"}],
+        "items": [{"id": 1, "name": "Fifa 19", "subtitle": "PS4", "price": 1500000, "currency": "VND", "quantity": 1, "unit": "pack"}],
         "shipping_cost": 5.0,
         "subtotal": 64.0,
         "total_cost": 69.0
@@ -186,7 +186,7 @@ def test_receive_payment_webhook_amount_mismatch(client, db, shop_client_auth_he
     """Test webhook with amount mismatch."""
     access_headers, _ = shop_client_auth_headers
     checkout_payload = {
-        "items": [{"id": 1, "name": "Fifa 19", "subtitle": "PS4", "price": 64.0, "quantity": 1, "unit": "pack"}],
+        "items": [{"id": 1, "name": "Fifa 19", "subtitle": "PS4", "price": 1500000, "currency": "VND", "quantity": 1, "unit": "pack"}],
         "shipping_cost": 5.0, "subtotal": 64.0, "total_cost": 69.0
     }
     res = client.post('/api/orders/checkout', headers=access_headers, json=checkout_payload)

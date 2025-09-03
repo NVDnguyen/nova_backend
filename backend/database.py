@@ -22,7 +22,8 @@ def get_orders_collection() -> collection.Collection:
 
 def get_map_collection() -> collection.Collection:
     return db["map"]
-
+def get_carts_collection()-> collection.Collection:
+    return db['carts']
 # --- Database Helpers ---
 def ensure_indexes():
     """Creates unique indexes for collections if they don't exist."""
@@ -82,11 +83,6 @@ def generate_products(n=20):
             'product_img_url': 'https://via.placeholder.com/80/e0e0e0/000000?Text=Accessory',
             'barcode': random_barcode()
         },
-        {"id": 4, "name": "Lay stax original yellow 150g", "subtitle": "", "price": 10.0, "currency": "VND", "quantity": 1, "unit": "each", "product_img_url": 'https://via.placeholder.com/80/e0e0e0/000000?Text=Accessory', "barcode": "8850718820634"},
-        {"id": 5, "name": "swing red bo bit tet 55g", "subtitle": "", "price": 10.0, "currency": "VND", "quantity": 1, "unit": "each", "product_img_url": 'https://via.placeholder.com/80/e0e0e0/000000?Text=Accessory', "barcode": "8936036021660"},
-        {"id": 6, "name": "haohao  chua cay hop 67g", "subtitle": "", "price": 10.0, "currency": "VND", "quantity": 1, "unit": "each", "product_img_url": 'https://via.placeholder.com/80/e0e0e0/000000?Text=Accessory', "barcode": "8934563651138"},
-        {"id": 7, "name": "lau thai tom hop 67g", "subtitle": "", "price": 10.0, "currency": "VND", "quantity": 1, "unit": "each", "product_img_url": 'https://via.placeholder.com/80/e0e0e0/000000?Text=Accessory', "barcode": "8934563619138"},
-        {"id": 8, "name": "nuoc khoang thien nhien vivan 500ml", "subtitle": "", "price": 10.0, "currency": "VND", "quantity": 1, "unit": "each", "product_img_url": 'https://via.placeholder.com/80/e0e0e0/000000?Text=Accessory', "barcode": "8936136163185"}
     ]
     products.extend(demo_products)
     # Add random mock products

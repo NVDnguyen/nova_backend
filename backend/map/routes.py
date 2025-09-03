@@ -34,7 +34,7 @@ async def get_product_location(
 ):
     """Return product location(s) and details. Case-insensitive name match."""
     # Use case-insensitive exact match for name
-    product = products_collection.find_one({"name": {"$regex": f"^{name}$", "$options": "i"}}, {"location": 1, "name": 1, "subtitle": 1, "price": 1, "quantity": 1, "unit": 1, "product_img_url": 1, "_id": 0})
+    product = products_collection.find_one({"name": {"$regex": f"^{name}$", "$options": "i"}}, {"location": 1, "name": 1, "subtitle": 1, "price": 1, "currency": 1, "quantity": 1, "unit": 1, "product_img_url": 1, "_id": 0})
     if not product or "location" not in product:
         raise HTTPException(status_code=404, detail="Product or location not found")
     # Ensure location is always a list

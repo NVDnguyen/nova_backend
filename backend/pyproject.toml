@@ -1,0 +1,24 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "celery[redis]==5.5.3",
+    "ecdsa==0.19.1",
+    "email-validator>=2.2.0",
+    "fastapi-cache2[redis]>=0.2.2",
+    "fastapi[standard]>=0.115.14",
+    "httpx>=0.26.0",
+    "passlib[bcrypt]>=1.7.4",
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+    "pymongo>=4.13.2",
+    "pytest==7.3.1",
+    "python-jose[cryptography]==3.5.0",
+    "python-multipart>=0.0.20",
+    "qrcode[svg]==7.4.2",
+    "redis>=4.6.0",
+    "uvicorn[standard]>=0.35.0",
+]

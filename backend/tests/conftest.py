@@ -43,9 +43,9 @@ def setup_test_db(test_db):
 
     # Seed initial products for tests that need them
     initial_products = [
-        {'id': 1, 'name': 'Fifa 19', 'subtitle': 'PS4', 'price': 64.00, 'quantity': 10, 'unit': 'pack', 'product_img_url': 'https://via.placeholder.com/80/cccccc/000000?Text=Game'},
-        {'id': 2, 'name': 'Glacier White 500GB', 'subtitle': 'PS4', 'price': 249.99, 'quantity': 5, 'unit': 'each', 'product_img_url': 'https://via.placeholder.com/80/f0f0f0/000000?Text=Console'},
-        {'id': 3, 'name': 'Platinum Headset', 'subtitle': 'PS4', 'price': 119.99, 'quantity': 20, 'unit': 'each', 'product_img_url': 'https://via.placeholder.com/80/e0e0e0/000000?Text=Accessory'},
+        {'id': 1, 'name': 'Fifa 19', 'subtitle': 'PS4', 'price': 1500000, 'currency': 'VND', 'quantity': 10, 'unit': 'pack', 'product_img_url': 'https://via.placeholder.com/80/cccccc/000000?Text=Game'},
+        {'id': 2, 'name': 'Glacier White 500GB', 'subtitle': 'PS4', 'price': 8000000, 'currency': 'VND', 'quantity': 5, 'unit': 'each', 'product_img_url': 'https://via.placeholder.com/80/f0f0f0/000000?Text=Console'},
+        {'id': 3, 'name': 'Platinum Headset', 'subtitle': 'PS4', 'price': 2500000, 'currency': 'VND', 'quantity': 20, 'unit': 'each', 'product_img_url': 'https://via.placeholder.com/80/e0e0e0/000000?Text=Accessory'},
     ]
     test_db.products.insert_many(initial_products)
     

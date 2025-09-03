@@ -30,17 +30,6 @@ router = APIRouter(
     prefix="/api/orders",
     tags=["Orders"]
 )
-
-def generate_vietqr_webhook_signature(data: VietQRWebhookPayload, secret: str) -> str:
-    """
-    Generates the HMAC SHA256 signature for VietQR webhook verification.
-    The exact payload string concatenation order is crucial and must match VietQR's spec.
-    Based on the provided FastAPI example, the order is:
-    paymentRequestId, state, amount, referenceId, extraData
-    """
-    payload_string = f"{data.paymentRequestId}{data.state}{data.amount}{data.referenceId}{data.extraData}"
-    return hmac.new(secret.encode(), payload_string.encode(), hashlib.sha256).hexdigest()
-
 @router.post('/checkout')
 async def initiate_checkout_and_generate_qr(
     cart_data: CheckoutPayload,
