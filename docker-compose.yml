@@ -14,7 +14,7 @@ services:
       - ./backend:/app/backend
     # Expose port
     ports:
-      - "${BACKEND_PORT}:5000"
+      - "5001:5000"
     # Load .env 
     env_file:
       - ./.env
