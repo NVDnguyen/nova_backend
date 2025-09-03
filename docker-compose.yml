@@ -1,0 +1,73 @@
+version: "3.8"
+
+services:
+  # --------- Backend API ---------
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shopping-cart-backend
+    # FastAPI server
+    command: uvicorn backend.app:app --host 0.0.0.0 --port 5000 --reload
+    # Mount code vào container để phát triển hot-reload
+    volumes:
+      - ./backend:/app/backend
+    # Expose port
+    ports:
+      - "${BACKEND_PORT}:5000"
+    # Load .env 
+    env_file:
+      - ./.env
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - app-network
+
+  # --------- Celery Worker ---------
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shopping-cart-worker
+    
+    command: celery -A backend.celery_app worker --loglevel=info
+    volumes:
+      - ./backend:/app/backend
+    env_file:
+      - ./.env
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - app-network
+
+  # --------- MongoDB ---------
+  mongo:
+    image: mongo:latest
+    container_name: mongo-db
+    # ports:
+    #   - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  # --------- Redis Cache ---------
+  redis:
+    image: redis:latest
+    container_name: redis-cache
+    # ports:
+    #   - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+  redis-data:

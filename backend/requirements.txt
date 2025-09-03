@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+pymongo
+passlib[bcrypt]
+python-jose[cryptography]
+celery
+redis
+fastapi-cache2[redis]
+pydantic
+pydantic-settings
+email-validator
+python-multipart
+httpx
+qrcode[svg]==7.4.2
+pytest==7.3.1
+httpx==0.26.0
+python-multipart
