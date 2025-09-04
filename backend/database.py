@@ -49,41 +49,7 @@ def random_barcode(length=13):
 def generate_products(n=20):
     products = []
     # Add original demo products (conform to ProductBase)
-    demo_products = [
-        {
-            'id': 1,
-            'name': 'Fifa 19',
-            'subtitle': 'PS4',
-            'price': 64.00,
-            'currency': 'VND',
-            'quantity': 1,
-            'unit': 'pack',
-            'product_img_url': 'https://via.placeholder.com/80/cccccc/000000?Text=Game',
-            'barcode': random_barcode()
-        },
-        {
-            'id': 2,
-            'name': 'Glacier White 500GB',
-            'subtitle': 'PS4',
-            'price': 249.99,
-            'currency': 'VND',
-            'quantity': 1,
-            'unit': 'each',
-            'product_img_url': 'https://via.placeholder.com/80/f0f0f0/000000?Text=Console',
-            'barcode': random_barcode()
-        },
-        {
-            'id': 3,
-            'name': 'Platinum Headset',
-            'subtitle': 'PS4',
-            'price': 119.99,
-            'currency': 'VND',
-            'quantity': 1,
-            'unit': 'each',
-            'product_img_url': 'https://via.placeholder.com/80/e0e0e0/000000?Text=Accessory',
-            'barcode': random_barcode()
-        },
-    ]
+    demo_products = []
     products.extend(demo_products)
     # Add random mock products
     for i in range(n):

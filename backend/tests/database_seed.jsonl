@@ -1,5 +1,55 @@
-{"id": 1, "name": "Lay stax original yellow 150g", "subtitle": "", "price": 10.0, "currency": "VND", "quantity": 1, "unit": "each", "product_img_url": null, "barcode": "8850718820634"}
-{"id": 2, "name": "swing red bo bit tet 55g", "subtitle": "", "price": 10.0, "currency": "VND", "quantity": 1, "unit": "each", "product_img_url": null, "barcode": "8936036021660"}
-{"id": 3, "name": "haohao  chua cay hop 67g", "subtitle": "", "price": 10.0, "currency": "VND", "quantity": 1, "unit": "each", "product_img_url": null, "barcode": "8934563651138"}
-{"id": 4, "name": "lau thai tom hop 67g", "subtitle": "", "price": 10.0, "currency": "VND", "quantity": 1, "unit": "each", "product_img_url": null, "barcode": "8934563619138"}
-{"id": 5, "name": "nuoc khoang thien nhien vivan 500ml", "subtitle": "", "price": 10.0, "currency": "VND", "quantity": 1, "unit": "each", "product_img_url": null, "barcode": "8936136163185"}
+{
+    "id": 1,
+    "name": "Lay stax original yellow 150g",
+    "subtitle": "",
+    "price": 10,
+    "currency": "VND",
+    "quantity": 1,
+    "unit": "each",
+    "product_img_url": null,
+    "barcode": "8850718820634"
+  },
+  {
+    "id": 2,
+    "name": "swing red bo bit tet 55g",
+    "subtitle": "",
+    "price": 10,
+    "currency": "VND",
+    "quantity": 1,
+    "unit": "each",
+    "product_img_url": null,
+    "barcode": "8936036021660"
+  },
+  {
+    "id": 3,
+    "name": "haohao  chua cay hop 67g",
+    "subtitle": "",
+    "price": 10,
+    "currency": "VND",
+    "quantity": 1,
+    "unit": "each",
+    "product_img_url": null,
+    "barcode": "8934563651138"
+  },
+  {
+    "id": 4,
+    "name": "lau thai tom hop 67g",
+    "subtitle": "",
+    "price": 10,
+    "currency": "VND",
+    "quantity": 1,
+    "unit": "each",
+    "product_img_url": null,
+    "barcode": "8934563619138"
+  },
+  {
+    "id": 5,
+    "name": "nuoc khoang thien nhien vivan 500ml",
+    "subtitle": "",
+    "price": 10,
+    "currency": "VND",
+    "quantity": 1,
+    "unit": "each",
+    "product_img_url": null,
+    "barcode": "8936136163185"
+  }
