@@ -50,10 +50,9 @@ from .users.routes import router as users_router
 from .orders.routes import router as orders_router
 from .me.routes import router as me_router
 from .map.routes import router as map_router
-from .cart.routes import router as cart_router
 
 app.include_router(products_router)
 app.include_router(users_router)
 app.include_router(orders_router)
 app.include_router(me_router)
-app.include_router(cart_router)
+app.include_router(map_router)

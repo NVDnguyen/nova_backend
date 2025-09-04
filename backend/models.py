@@ -2,64 +2,9 @@
 from typing import List, Optional
 from enum import Enum
 from decimal import Decimal
-from pydantic import BaseModel, Field, model_validator, EmailStr,conint, constr
+from pydantic import BaseModel, Field, model_validator, EmailStr
 from datetime import datetime
 
-# ---- Enums ----
-class CartAction(str, Enum):
-    add = "add"
-    remove = "remove"
-
-# ---- Requests ----
-class CartOpRequest(BaseModel):
-    """
-    Payload for POST /cart/op
-    """
-    barcode: constr(strip_whitespace=True, min_length=1) = Field(
-        ...,
-        description="EAN/UPC/Code-128 etc. of the product to add/remove."
-    )
-    action: CartAction = Field(
-        ...,
-        description="Operation to perform on the cart: 'add' or 'remove'."
-    )
-    quantity: conint(strict=True, ge=1) = Field(
-        1,
-        description="Number of units to add/remove (must be >= 1).",
-    )
-
-    class Config:
-        anystr_strip_whitespace = True
-        extra = "forbid"
-        schema_extra = {
-            "example": {
-                "barcode": "8931234567890",
-                "action": "add",
-                "quantity": 2
-            }
-        }
-
-# ---- Responses ----
-class CartOpResponse(BaseModel):
-    """
-    Response for POST /cart/op
-    """
-    success: bool = Field(..., description="Whether the operation succeeded.")
-    message: str = Field(..., description="Human-readable status message.")
-    cart_total_items: conint(ge=0) = Field(
-        ...,
-        description="Total quantity of all items currently in the user's cart."
-    )
-
-    class Config:
-        extra = "forbid"
-        schema_extra = {
-            "example": {
-                "success": True,
-                "message": "Cart updated: add 2x Instant Noodles",
-                "cart_total_items": 7
-            }
-        }
 
 class ProductBase(BaseModel):
     name: str

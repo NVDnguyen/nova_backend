@@ -6,10 +6,7 @@ from ..models import Product, CartOpRequest, CartOpResponse
 from ..auth import get_current_user, TokenData
 from backend.database import get_carts_collection, get_products_collection
 
-router = APIRouter(
-    prefix="/api/cart",
-    tags=["Cart"]
-)
+router = APIRouter()
 
 
 @router.post("/op", response_model=CartOpResponse)
@@ -31,7 +28,7 @@ async def cart_operation(
         carts_collection = get_carts_collection()
         
         # 1. Validate product exists
-        product = products_collection.find_one({"barcode": request.barcode})
+        product = await products_collection.find_one({"barcode": request.barcode})
         if not product:
             return CartOpResponse(
                 success=False,
@@ -40,7 +37,7 @@ async def cart_operation(
             )
         
         # 2. Get current cart
-        user_cart = carts_collection.find_one({"user_identity": user.identity})
+        user_cart = await carts_collection.find_one({"user_identity": user.identity})
         if not user_cart:
             user_cart = {"user_identity": user.identity, "items": []}
         
@@ -74,7 +71,7 @@ async def cart_operation(
         if request.action == "add":
             if cart_item:
                 # Update existing item
-                carts_collection.update_one(
+                await carts_collection.update_one(
                     {"user_identity": user.identity, "items.barcode": request.barcode},
                     {"$inc": {"items.$.quantity": request.quantity}}
                 )
@@ -86,7 +83,7 @@ async def cart_operation(
                     "price": product.get("price"),
                     "quantity": request.quantity
                 }
-                carts_collection.update_one(
+                await carts_collection.update_one(
                     {"user_identity": user.identity},
                     {"$push": {"items": new_item}},
                     upsert=True
@@ -94,19 +91,19 @@ async def cart_operation(
         elif request.action == "remove":
             if cart_item.get("quantity", 0) == request.quantity:
                 # Remove item completely
-                carts_collection.update_one(
+                await carts_collection.update_one(
                     {"user_identity": user.identity},
                     {"$pull": {"items": {"barcode": request.barcode}}}
                 )
             else:
                 # Decrease quantity
-                carts_collection.update_one(
+                await carts_collection.update_one(
                     {"user_identity": user.identity, "items.barcode": request.barcode},
                     {"$inc": {"items.$.quantity": -request.quantity}}
                 )
         
         # 5. Get updated cart for response
-        updated_cart = carts_collection.find_one({"user_identity": user.identity})
+        updated_cart = await carts_collection.find_one({"user_identity": user.identity})
         total_items = sum(item.get("quantity", 0) for item in updated_cart.get("items", []))
         
         return CartOpResponse(
@@ -116,64 +113,4 @@ async def cart_operation(
         )
         
     except Exception as e:
-        import traceback
-        traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Cart operation failed: {str(e)}")
-
-
-from fastapi import Depends, HTTPException
-from pymongo import collection
-from ..auth import get_current_user, TokenData
-from ..models import Product
-from backend.database import get_carts_collection, get_products_collection
-
-@router.get("/op", response_model=List[Product])
-def get_cart(
-    user: TokenData = Depends(get_current_user),
-    carts_collection: collection.Collection = Depends(get_carts_collection),
-    products_collection: collection.Collection = Depends(get_products_collection),
-):
-    """
-    Get the current user's cart as a list of Product objects.
-    Each returned Product includes full metadata from the products collection,
-    with its `quantity` set to the quantity in the cart.
-    """
-    # Fetch the user's cart (only need items)
-    user_cart = carts_collection.find_one(
-        {"user_identity": user.identity},
-        {"_id": 0, "items": 1}
-    )
-    cart_items = user_cart.get("items", []) if user_cart else []
-    if not cart_items:
-        return []
-
-    # Collect barcodes from cart and fetch corresponding product docs
-    barcodes = [it.get("barcode") for it in cart_items if it.get("barcode")]
-    if not barcodes:
-        return []
-
-    products = list(
-        products_collection.find(
-            {"barcode": {"$in": barcodes}},
-            {"_id": 0}  # strip Mongo _id for Pydantic compatibility
-        )
-    )
-
-    # Index product metadata by barcode for quick merge
-    by_barcode = {p.get("barcode"): p for p in products}
-
-    # Build response: merge metadata + cart quantity
-    result: List[Product] = []
-    for it in cart_items:
-        bc = it.get("barcode")
-        qty = int(it.get("quantity", 0) or 0)
-        meta = by_barcode.get(bc)
-        if not meta:
-            # Product no longer exists or barcode mismatch — skip silently
-            # (alternatively, you could log or surface a warning)
-            continue
-        merged = dict(meta)
-        merged["quantity"] = max(qty, 0)  # ensure non-negative
-        result.append(Product(**merged))
-
-    return result
